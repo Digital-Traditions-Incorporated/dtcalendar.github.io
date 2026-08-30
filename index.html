@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>dtCalendar — Tamil Panchangam for the Global Tamil Community</title>
+  <meta name="description" content="dtCalendar brings precise Tamil Panchangam data to your phone — tithi, nakshatra, Raagukalam, festivals, and more. Available on iOS and Android.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --charcoal: #1F1F1F;
+      --text: #212121;
+      --accent: #F34F4C;
+      --accent-dark: #D3413F;
+      --accent-bright: #FF5252;
+      --white: #FFFFFF;
+      --gray-light: #F7F7F7;
+      --gray-mid: #F4F4F4;
+      --gray-text: #666666;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Open Sans', system-ui, sans-serif;
+      color: var(--text);
+      background: var(--white);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* --- HERO --- */
+    .hero {
+      min-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 3rem 1.5rem;
+      background: var(--charcoal);
+      color: var(--white);
+      position: relative;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 400;
+      line-height: 1.2;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      max-width: 750px;
+    }
+
+    .hero h1::before {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 5px;
+      background: var(--accent-bright);
+      margin: 0 auto 1.5rem;
+    }
+
+    .hero p {
+      font-family: 'Open Sans', sans-serif;
+      font-size: 1rem;
+      max-width: 520px;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 2.5rem;
+      line-height: 1.7;
+    }
+
+    .store-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .store-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.85rem 1.8rem;
+      border-radius: 0;
+      text-decoration: none;
+      font-family: 'Open Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: opacity 0.2s ease;
+    }
+
+    .store-btn:hover { opacity: 0.85; }
+
+    .store-btn.primary {
+      background: var(--accent-dark);
+      color: var(--white);
+      border: 2px solid var(--accent-dark);
+    }
+
+    .store-btn.secondary {
+      background: transparent;
+      color: var(--white);
+      border: 2px solid var(--white);
+    }
+
+    .store-btn svg {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+
+    /* --- FEATURES --- */
+    .features {
+      padding: 5rem 1.5rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .section-heading {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 400;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 0.5rem;
+      color: var(--charcoal);
+    }
+
+    .section-heading::before {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 4px;
+      background: var(--accent-bright);
+      margin: 0 auto 1rem;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      color: var(--gray-text);
+      max-width: 500px;
+      margin: 0 auto 3.5rem;
+      font-size: 0.95rem;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 2rem;
+    }
+
+    .feature-card {
+      padding: 2rem;
+      background: var(--gray-light);
+    }
+
+    .feature-icon {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature-card h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+      color: var(--charcoal);
+    }
+
+    .feature-card p {
+      font-size: 0.88rem;
+      color: var(--gray-text);
+      line-height: 1.6;
+    }
+
+    /* --- AUDIENCE --- */
+    .audience {
+      background: var(--gray-mid);
+      padding: 5rem 1.5rem;
+      text-align: center;
+    }
+
+    .audience p {
+      max-width: 600px;
+      margin: 0 auto 2.5rem;
+      color: var(--gray-text);
+      line-height: 1.7;
+      font-size: 0.95rem;
+    }
+
+    .regions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.75rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .region-tag {
+      padding: 0.45rem 1.1rem;
+      border: 1px solid var(--accent);
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--accent);
+    }
+
+    /* --- CTA --- */
+    .cta {
+      background: var(--charcoal);
+      color: var(--white);
+      padding: 5rem 1.5rem;
+      text-align: center;
+    }
+
+    .cta .section-heading { color: var(--white); }
+
+    .cta .section-heading::before { background: var(--accent-bright); }
+
+    .cta p {
+      color: rgba(255,255,255,0.7);
+      max-width: 500px;
+      margin: 0 auto 2.5rem;
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    /* --- FOOTER --- */
+    footer {
+      padding: 2rem 1.5rem;
+      text-align: center;
+      background: var(--white);
+    }
+
+    footer small {
+      font-family: 'Open Sans', sans-serif;
+      font-size: 0.75rem;
+      color: var(--gray-text);
+    }
+
+    footer a {
+      color: var(--charcoal);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: var(--accent);
+    }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 600px) {
+      .hero { min-height: 75vh; padding: 2.5rem 1.25rem; }
+      .store-buttons { flex-direction: column; align-items: center; }
+      .store-btn { width: 100%; max-width: 280px; justify-content: center; }
+      .feature-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .store-btn { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-eyebrow">By Digital Traditions Incorporated</p>
+    <h1>Your Daily Panchangam, Precise and Personal</h1>
+    <p>Tithi, nakshatra, Raagukalam, festivals, and auspicious timings — computed for your exact location, wherever you are in the world.</p>
+    <div class="store-buttons">
+      <a href="YOUR_APP_STORE_LINK" class="store-btn primary" aria-label="Download on the App Store">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        App Store
+      </a>
+      <a href="YOUR_PLAY_STORE_LINK" class="store-btn secondary" aria-label="Get it on Google Play">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a1 1 0 01.609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-1.4l2.651 1.535a1 1 0 010 1.73l-2.651 1.535-2.534-2.535 2.534-2.266zM5.864 3.458L16.8 9.79l-2.302 2.302-8.634-8.634z"/></svg>
+        Google Play
+      </a>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features">
+    <h2 class="section-heading">Rooted in Tradition, Built with Precision</h2>
+    <p class="section-subtitle">Every calculation is ephemeris-driven — not looked up from a table — so your Panchangam is accurate for any date, any location.</p>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🌙</div>
+        <h3>Daily Panchangam</h3>
+        <p>Tithi, nakshatra, Tamil month and date, yogam, and karanam — all computed in real time for your location.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⏳</div>
+        <h3>Raagukalam &amp; Yamagandam</h3>
+        <p>Know the inauspicious windows for each day, precisely calculated from local sunrise and sunset.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">☀️</div>
+        <h3>Subha Horai</h3>
+        <p>Find the most auspicious planetary hours for your day, based on precise astronomical timings.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🪔</div>
+        <h3>Festival Calendar</h3>
+        <p>Comprehensive Tamil festival dates — solar, nakshatra-based, Vaishnava, Shaiva, and monthly observances like Pradosham.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎨</div>
+        <h3>Deity Cards</h3>
+        <p>Beautifully illustrated deity artwork with iconographic accuracy, crafted for each festival and occasion.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌏</div>
+        <h3>Works Everywhere</h3>
+        <p>Whether you're in Chennai, Toronto, London, or Sydney — your Panchangam reflects where you are right now.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- AUDIENCE -->
+  <section class="audience">
+    <h2 class="section-heading">For Tamil Communities, Wherever Home Is</h2>
+    <p>dtCalendar is built for the global Tamil diaspora — families and individuals keeping their cultural and spiritual practice alive across borders and time zones.</p>
+    <div class="regions">
+      <span class="region-tag">Canada</span>
+      <span class="region-tag">United States</span>
+      <span class="region-tag">United Kingdom</span>
+      <span class="region-tag">Australia</span>
+      <span class="region-tag">Singapore</span>
+      <span class="region-tag">India</span>
+      <span class="region-tag">Worldwide</span>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <h2 class="section-heading">Start Your Day with Clarity</h2>
+    <p>Download dtCalendar and bring the Panchangam into your daily rhythm — free, precise, and always with you.</p>
+    <div class="store-buttons">
+      <a href="YOUR_APP_STORE_LINK" class="store-btn primary" aria-label="Download on the App Store">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        App Store
+      </a>
+      <a href="YOUR_PLAY_STORE_LINK" class="store-btn secondary" aria-label="Get it on Google Play">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a1 1 0 01.609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-1.4l2.651 1.535a1 1 0 010 1.73l-2.651 1.535-2.534-2.535 2.534-2.266zM5.864 3.458L16.8 9.79l-2.302 2.302-8.634-8.634z"/></svg>
+        Google Play
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <small>Copyright &copy; 2026 <a href="https://www.digitaltraditions.ca">Digital Traditions Incorporated</a> - All Rights Reserved.</small>
+  </footer>
+
+</body>
+</html>
