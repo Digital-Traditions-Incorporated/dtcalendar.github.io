@@ -383,5 +383,29 @@
     <small>Copyright &copy; 2026 <a href="https://www.digitaltraditions.ca">Digital Traditions Incorporated</a> - All Rights Reserved.</small>
   </footer>
 
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyASGjJNomQKAvXUVTUOAtwT16BynpmQOG4",
+    authDomain: "dtcalendar-6f55b.firebaseapp.com",
+    projectId: "dtcalendar-6f55b",
+    storageBucket: "dtcalendar-6f55b.firebasestorage.app",
+    messagingSenderId: "361372662539",
+    appId: "1:361372662539:web:8dd51b53ec8676e150c00e",
+    measurementId: "G-M5MW8ZJJ5H"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
+  
 </body>
 </html>
