@@ -1,6 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
+<script>
+  // Spec 0058. Redirects ONLY tagged visits (R1/D6); a bare / never redirects.
+  (function () {
+    var IOS_PROVIDER_TOKEN = '';      // D5: App Store Connect provider token
+    var IOS_REDIRECT_ENABLED = false; // true once the App Store id is confirmed (R9) and the token is set (D5)
+    var PLAY = 'https://play.google.com/store/apps/details?id=com.digitaltraditions.dtcalendar';
+    var APP_STORE = 'https://apps.apple.com/app/apple-store/id6797632212'; // id: R9; form: R10
+
+    var params = new URLSearchParams(location.search);
+    var ok = /^[A-Za-z0-9._-]{1,64}$/, u = {};                              // R10: allow-list
+    ['utm_source', 'utm_medium', 'utm_campaign'].forEach(function (k) {
+      var v = params.get(k); if (v && ok.test(v)) u[k] = v;
+    });
+    if (!u.utm_source) return;                                              // R1: untagged -> page, buttons untouched
+
+    var pairs = Object.keys(u).map(function (k) { return k + '=' + u[k]; }).join('&');
+    var playUrl = PLAY + '&referrer=' + encodeURIComponent(pairs);
+    var ct = (u.utm_source + (u.utm_campaign ? '_' + u.utm_campaign : '')).slice(0, 40);
+    var appUrl = APP_STORE + '?' + (IOS_PROVIDER_TOKEN ? 'pt=' + IOS_PROVIDER_TOKEN + '&' : '') +
+                 'ct=' + encodeURIComponent(ct) + '&mt=8';
+
+    // R1/G4: a tagged visit that renders the page keeps its tag on the store buttons.
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('a[href^="https://play.google.com/"]').forEach(function (a) { a.href = playUrl; });
+      if (IOS_PROVIDER_TOKEN) document.querySelectorAll('a[href^="https://apps.apple.com/"]')
+        .forEach(function (a) { a.href = appUrl; });
+    });
+
+    if (params.get('nr') === '1') return;                                   // R2: test override
+    var ua = navigator.userAgent || '';
+    if (/FBAN|FBAV|Instagram|LinkedInApp|Snapchat|MicroMessenger|Line\/|TikTok|musical_ly|; wv\)/i.test(ua)) return; // in-app browsers
+    if (/android/i.test(ua)) {
+      window.location.replace(playUrl);
+    } else if (IOS_REDIRECT_ENABLED && (/iphone|ipod|ipad/i.test(ua) ||
+               (/Macintosh/.test(ua) && (navigator.maxTouchPoints || 0) > 1))) {    // iPad Desktop mode
+      window.location.replace(appUrl);
+    }
+    // Desktop / unknown: render normally (buttons already carry the tag)
+  })();
+</script>
   <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-RZPQHWJC61"></script>
 <script>
@@ -10,10 +51,25 @@
 
   gtag('config', 'G-RZPQHWJC61');
 </script>
-  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Digital Traditions — Tamil Panchangam for the Global Tamil Community</title>
   <meta name="description" content="dtCalendar brings precise Tamil Panchangam data to your phone — tithi, nakshatra, Raagukalam, festivals, and more. Available on iOS and Android.">
+  <link rel="canonical" href="https://dtcalendar.digitaltraditions.ca/">
+  <meta property="og:title" content="Tamil Daily Sheet Calendar">
+  <meta property="og:description" content="Daily Tamil panchangam with Raaghu Kalam, Nalla Neram and festival reminders. Precise for your location — worldwide.">
+  <meta property="og:image" content="https://dtcalendar.digitaltraditions.ca/og-image.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Daily Sheet Calendar — your daily Tamil calendar, precise and personal">
+  <meta property="og:url" content="https://dtcalendar.digitaltraditions.ca/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Daily Sheet Calendar">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Tamil Daily Sheet Calendar">
+  <meta name="twitter:description" content="Daily Tamil panchangam with Raaghu Kalam, Nalla Neram and festival reminders. Precise for your location — worldwide.">
+  <meta name="twitter:image" content="https://dtcalendar.digitaltraditions.ca/og-image.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
