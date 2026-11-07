@@ -337,6 +337,34 @@
       color: var(--accent);
     }
 
+    /* --- FESTIVAL LINKS (spec 0066) --- */
+    .festivals {
+      padding: 4rem 1.5rem;
+      text-align: center;
+    }
+
+    .festival-links {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .festival-links a {
+      display: inline-block;
+      padding: 0.6rem 1.4rem;
+      border: 1px solid var(--accent);
+      color: var(--accent-dark);
+      font-family: 'Oswald', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+    }
+
+    .festival-links a:hover { background: var(--accent); color: var(--white); }
+
     /* --- CTA --- */
     .cta {
       background: var(--charcoal);
@@ -468,6 +496,14 @@
       <span class="region-tag">India</span>
       <span class="region-tag">Worldwide</span>
     </div>
+  </section>
+
+  <!-- FESTIVALS (spec 0066) -->
+  <section class="festivals">
+    <h2 class="section-heading">Festival Dates for Your City</h2>
+    <ul class="festival-links">
+      <li><a href="/karthigai-deepam/">Karthigai Deepam 2026</a></li>
+    </ul>
   </section>
 
   <!-- CTA -->

@@ -1,0 +1,19 @@
+{%- comment -%}
+  spec 0066 R6: places for one date group. include.items = that date's rows,
+  include.all = every row of the occurrence. A country whose cities fall on more
+  than one date is listed as its cities. Joined "A, B and C".
+{%- endcomment -%}
+{%- assign countries = include.items | map: "country" | uniq -%}
+{%- capture parts -%}
+{%- for c in countries -%}
+{%- assign c_dates = include.all | where: "country", c | map: "date" | uniq -%}
+{%- if c_dates.size > 1 -%}
+{%- assign names = include.items | where: "country", c | map: "name" -%}
+{%- for n in names -%}{{ n }}|{%- endfor -%}
+{%- else -%}
+{%- case c -%}{%- when "UK" -%}the UK{%- when "USA" -%}the USA{%- when "UAE" -%}the UAE{%- else -%}{{ c }}{%- endcase -%}|
+{%- endif -%}
+{%- endfor -%}
+{%- endcapture -%}
+{%- assign arr = parts | split: "|" -%}
+{%- for p in arr -%}{%- if forloop.first -%}{{ p }}{%- elsif forloop.last %} and {{ p }}{%- else -%}, {{ p }}{%- endif -%}{%- endfor -%}
